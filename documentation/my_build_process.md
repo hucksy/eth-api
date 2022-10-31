@@ -2,12 +2,10 @@
 
 ---
 #### What it is:
-We're not totally sure yet at this point, but we're
-using this as an exercise in building an API in Python
+This is an exercise in building an API in Python
 with the FastAPI framework. We're going to pull down some
-ethereum blockchain data and see if we can tinker with 
-it until we make something at least mildly interesting....but
-verry *mild*.
+ethereum blockchain data using the web3.py library and see if we can tinker with 
+it until we make something at least mildly interesting...emphasis on *mild*.
 
 #### Setup:
 My first steps in this project was to research how
@@ -22,13 +20,13 @@ simple here.
 
 Infura has a sweet UI and some helfpul documentation to get us 
 started quick. Once we have an account, we click Create New Key
-and awaayyyyy we go.
+and awaayyyyy we go.  
 ![img.png](infura_snap1.png)  
 <br>
 
 The quick start [guide](https://web3py.readthedocs.io/en/v5/quickstart.html#getting-blockchain-info) from Web3.py is easy to follow and gets
 us going with some tools for requesting data, neatO! With IPython and Web3 installed
-we can start seeing transactions:
+we can start seeing transactions:  
 ![img_1.png](test_eth_request.png)
 <br>
 <br>

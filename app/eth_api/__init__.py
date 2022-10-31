@@ -1,5 +1,4 @@
-from fastapi import FastAPI, Depends
-from app.config import get_env_configs
+from fastapi import FastAPI
 
 
 def create_app() -> FastAPI:
