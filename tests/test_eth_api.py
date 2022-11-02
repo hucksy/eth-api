@@ -8,3 +8,4 @@ def test_root():
     response = tc.get("/")
     assert response.json() == {'message': 'hulloh beautiful world!'}
     assert response.status_code == 200
+

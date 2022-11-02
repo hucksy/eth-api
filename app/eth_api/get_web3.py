@@ -1,15 +1,16 @@
 from app.config import get_env_configs
 from web3 import Web3
 from . import schemas
+import json
 # from web3 import EthereumTesterProvider
 
 
 class BlockChainRequester:
     def __init__(self):
-        self.connect()
         self.w3 = None
+        self.connect()
 
-    async def connect(self):
+    def connect(self):
         self.w3 = Web3(Web3.HTTPProvider(get_env_configs().INFURA_ENDPOINT))
         # self.w3 = Web3(EthereumTesterProvider())
         try:
@@ -17,14 +18,10 @@ class BlockChainRequester:
         except Exception as e:
             print(e)
 
-    async def get_latest_block(self):
+    def get_block(self):
         latest_block = self.w3.eth.get_block('latest')
-        return latest_block
-
-    async def get_latest_block_hash(self):
-        latest_block = self.w3.eth.get_block('latest')
-        latest_hash_binary = dict(latest_block).get('hash')
-        return self.w3.toInt(latest_hash_binary)
+        lb_json = json.loads(Web3.toJSON(latest_block))
+        return lb_json
 
 
 def format_block(block):

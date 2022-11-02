@@ -18,14 +18,14 @@ async def get_test():
 
 # TO-DO: pull this from db instead
 @eth_router.get('/latest_block')
-async def get_latest_block():
-    latest_block = Web3.toJSON(request_block())
-    return {"latest_block": latest_block}
+def get_latest_block():
+    latest_block = request_block()
+    return latest_block
 
 
 @eth_router.post('/add_block')
-async def add_latest_block(db: Session = Depends(get_db)):
-    latest_block = gw3.format_block(request_block())
+def add_latest_block(db: Session = Depends(get_db)):
+    latest_block = schemas.EthBlock(**request_block())
     add_block = crud.create_block(db=db, eth_block=latest_block)
     return add_block
 
@@ -33,5 +33,5 @@ async def add_latest_block(db: Session = Depends(get_db)):
 # TO-DO paramterize inputs
 def request_block():
     bc = gw3.BlockChainRequester()
-    block = bc.get_latest_block()
+    block = bc.get_block()
     return block

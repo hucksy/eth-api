@@ -1,13 +1,12 @@
 from sqlalchemy.orm import Session
+from typing import Union
 from . import schemas
 from . import models
-from web3 import Web3
 
 
-def create_block(db: Session, eth_block: schemas.EthBlock):
+def create_block(db: Session, eth_block: schemas.EthBlock) -> Union[models.EthBlock, dict]:
     new_block = models.EthBlock(**eth_block.dict())
-    check_block = db.get(models.EthBlock, eth_block.number)
-    if check_block is None:
+    if unique_block(db, eth_block.number):
         db.add(new_block)
         db.commit()
         db.refresh(new_block)
@@ -16,24 +15,18 @@ def create_block(db: Session, eth_block: schemas.EthBlock):
         return {"message": "block already exists in db"}
 
 
-def read(db: Session, block_num: int):
+def unique_block(db, block_number) -> bool:
+    return read_block(db, block_number) is None
+
+
+def read_block(db: Session, block_num: int):
     query_block = db.get(models.EthBlock, block_num)
     return query_block
 
 
-def update(db: Session, block_num: int):
-        pass
-
-
-def delete():
+def update_block(db: Session, block_num: int):
     pass
 
 
-def format_block(block):
-    new_block = schemas.EthBlock(
-        number=Web3.toInt(block["number"]),
-        hash=Web3.toInt(block["hash"]),
-        parent_hash=Web3.toInt(block["parentHash"]),
-        nonce=Web3.toInt(block["nonce"])
-    )
-    return new_block
+def delete_block():
+    pass
