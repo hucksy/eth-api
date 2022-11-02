@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, Json
 from typing import List, Optional
 
 
@@ -29,3 +29,7 @@ class EthBlock(BaseModel):
     transactions: List[str]
     transactions_root: str = Field(alias='transactionsRoot')
     uncles: Optional[List[str]]
+
+
+class BlockNumber(BaseModel):
+    block_number: int

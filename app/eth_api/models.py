@@ -1,5 +1,6 @@
 from app.database import Base
 from sqlalchemy import Column, BigInteger, Integer, String
+from sqlalchemy.dialects.postgresql import ARRAY
 
 
 class EthBlock(Base):
@@ -9,10 +10,10 @@ class EthBlock(Base):
     number = Column(Integer, primary_key=True, autoincrement=False)
     hash = Column(String, nullable=False)
     parent_hash = Column(String, nullable=False)
-    nonce = Column(Integer, nullable=False)
-    base_fee_per_gas = Column(Integer, nullable=False)
+    nonce = Column(String, nullable=False)
+    base_fee_per_gas = Column(BigInteger, nullable=False)
     difficulty = Column(Integer, nullable=False)
-    extra_data = Column(String, nullable=False)
+    extra_data = Column(String, nullable=True)
     gas_limit = Column(BigInteger, nullable=False)
     gas_used = Column(BigInteger, nullable=False)
     logs_bloom = Column(String)
@@ -20,11 +21,11 @@ class EthBlock(Base):
     mix_hash = Column(String, nullable=False)
     receipts_root = Column(String, nullable=False)
     sha3_uncles = Column(String, nullable=False)
-    size = Column(String, nullable=False)
+    size = Column(Integer, nullable=False)
     state_root = Column(String, nullable=False)
     timestamp = Column(BigInteger, nullable=False)
-    total_difficulty = Column(BigInteger, nullable=False)
-    transactions = Column(String, nullable=False)
+    total_difficulty = Column(String, nullable=False)
+    transactions = Column(ARRAY(String), nullable=False)
     transactions_root = Column(String, nullable=False)
     uncles = Column(String, nullable=False)
 

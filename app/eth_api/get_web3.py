@@ -1,6 +1,5 @@
 from app.config import get_env_configs
 from web3 import Web3
-from . import schemas
 import json
 # from web3 import EthereumTesterProvider
 
@@ -18,17 +17,10 @@ class BlockChainRequester:
         except Exception as e:
             print(e)
 
-    def get_block(self):
-        latest_block = self.w3.eth.get_block('latest')
-        lb_json = json.loads(Web3.toJSON(latest_block))
-        return lb_json
+    def get_block(self, block_num) -> json:
+        block = self.w3.eth.get_block(block_num)
+        block_json = json.loads(Web3.toJSON(block))
+        return block_json
 
-
-def format_block(block):
-    new_block = schemas.EthBlock(
-        number=Web3.toInt(block["number"]),
-        hash=str(Web3.toInt(block["hash"])),
-        parent_hash=str(Web3.toInt(block["parentHash"])),
-        nonce=Web3.toInt(block["nonce"])
-    )
-    return new_block
+    def get_block_num(self) -> int:
+        return self.w3.eth.block_number

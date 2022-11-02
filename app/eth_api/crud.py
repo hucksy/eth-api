@@ -15,7 +15,7 @@ def create_block(db: Session, eth_block: schemas.EthBlock) -> Union[models.EthBl
         return {"message": "block already exists in db"}
 
 
-def unique_block(db, block_number) -> bool:
+def unique_block(db: Session, block_number) -> bool:
     return read_block(db, block_number) is None
 
 
@@ -28,5 +28,5 @@ def update_block(db: Session, block_num: int):
     pass
 
 
-def delete_block():
+def delete_block(db: Session, block_num: int):
     pass

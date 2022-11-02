@@ -44,7 +44,8 @@ Then we set up a quick end point to test that our fancy new FastAPI is working:
 ![img.png](test_endpoing.png)
     
 
-and blamO! we get some dat'r back boii, so freakin sick yoooo:
+and blamO! we get some dat'r back boii:  
+
 ![img.png](test_request.png)
 <br>
 <br>
@@ -55,17 +56,18 @@ and push it through our API...but dang, something's not happy:
 <br>
 I can see the data coming back in my print statement, sow what's going on?...
 Well, it looks like pydantic doesn't like the hex values cuz it's trying to 
-decode with UTF8....but alas there's actually a toJson() function in the Web3
-library (found via this [github issue](https://github.com/ethereum/web3.py/pull/1173)),
+decode with UTF8, so we gotta do some massaging of the data to get it into a valid
+json format (relevant git [github issue](https://github.com/ethereum/web3.py/pull/1173)),
 so we can do something like the below:
 
 ```
-def get_latest_block(self):
-        latest_block = self.w3.eth.get_block('latest')
-        lb_json = Web3.toJSON(latest_block)
-        return lb_json 
+def get_block(self):
+        block = self.w3.eth.get_block('latest')
+        block_json = json.loads(Web3.toJSON(block))
+        return block_json
 ```
 <br>
 On to the database. We'll spin up a Postgres db so that we can save this data
-and make a pipeline into the db. First we'll test things out with a simple table
+and make a pipeline into the db. First we'll test things out with a table
 to store blocks.
+
