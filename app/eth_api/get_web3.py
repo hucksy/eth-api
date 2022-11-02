@@ -1,7 +1,6 @@
 from app.config import get_env_configs
 from web3 import Web3
 import json
-# from web3 import EthereumTesterProvider
 
 
 class BlockChainRequester:
@@ -17,8 +16,8 @@ class BlockChainRequester:
         except Exception as e:
             print(e)
 
-    def get_block(self, block_num) -> json:
-        block = self.w3.eth.get_block(block_num)
+    def get_block(self, block_num: int) -> json:
+        block = self.w3.eth.get_block(Web3.toHex(int(block_num)))
         block_json = json.loads(Web3.toJSON(block))
         return block_json
 

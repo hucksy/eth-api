@@ -8,7 +8,7 @@ class EnvConfigs(BaseSettings):
     INFURA_ENDPOINT: str
     ENVIRONMENT: str
     DATABASE_URL: str
-    DATABASE_PORT: str
+    DATABASE_URL_TEST: str
 
     class Config:
         env_file = '.env'
